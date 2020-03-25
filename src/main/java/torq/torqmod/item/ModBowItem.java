@@ -13,9 +13,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Mod;
-import torq.torqmod.TorqMod;
 
 /**
  *
@@ -23,11 +22,12 @@ import torq.torqmod.TorqMod;
  * @author torq
  * @version 0.1
  */
-public class ModBowItem extends ShootableItem {
+public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
 
     private final float pullingTime;
     private final float maxArrowVelocity;
     private final double arrowDamage;
+    private final float zoomMultiplier;
 
     public ModBowItem(ModBowItem.Properties properties, Item.Properties builder) {
         super(builder);
@@ -35,6 +35,7 @@ public class ModBowItem extends ShootableItem {
         this.pullingTime = properties.pullingTime;
         this.maxArrowVelocity = properties.maxArrowVelocity;
         this.arrowDamage = properties.arrowDamage;
+        this.zoomMultiplier = properties.zoomMultiplier;
 
         this.addPropertyOverride(new ResourceLocation("pull"), (itemStackIn, worldIn, livingEntityIn) -> {
             if (livingEntityIn == null) {
@@ -150,9 +151,7 @@ public class ModBowItem extends ShootableItem {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BOW;
-    }
+    public UseAction getUseAction(ItemStack stack) { return UseAction.BOW; }
 
     /**
      * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
@@ -184,6 +183,12 @@ public class ModBowItem extends ShootableItem {
         return arrow;
     }
 
+    @Override
+    public float getFOVMod(ItemStack stack, PlayerEntity player) {
+        float progress = MathHelper.clamp((stack.getUseDuration() - player.getItemInUseCount()) / pullingTime, 0, getMaxArrowVelocity());
+        return progress * progress * zoomMultiplier;
+    }
+
     public float getPullingTime() {
         return this.pullingTime;
     }
@@ -210,6 +215,8 @@ public class ModBowItem extends ShootableItem {
          */
         private double arrowDamage = 2.0D;
 
+        private float zoomMultiplier = 0.15F;
+
         public ModBowItem.Properties pullingTime(float pullingTimeIn) {
             this.pullingTime = pullingTimeIn;
             return this;
@@ -222,6 +229,11 @@ public class ModBowItem extends ShootableItem {
 
         public ModBowItem.Properties arrowDamage(double arrowDamageIn) {
             this.arrowDamage = arrowDamageIn;
+            return this;
+        }
+
+        public ModBowItem.Properties zoomMultiplier(float zoomMultiplierIn) {
+            this.zoomMultiplier = zoomMultiplierIn;
             return this;
         }
     }

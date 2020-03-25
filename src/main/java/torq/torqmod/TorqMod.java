@@ -1,8 +1,11 @@
 package torq.torqmod;
 
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import net.minecraftforge.fml.common.Mod;
+import torq.torqmod.world.ModOreGeneration;
 
 /**
  * 
@@ -16,11 +19,11 @@ public class TorqMod {
 	public static TorqMod INSTANCE;
 
 	public TorqMod() {
-		LOGGER.info("Torqmod Constructor");
-		LOGGER.debug("Debug Logging Enabled");
-
 		INSTANCE = this;
 	}
 
-
+	@SubscribeEvent
+	public  static void onLoadComplete(FMLLoadCompleteEvent event) {
+		ModOreGeneration.setupOreGeneration();
+	}
 }
