@@ -1,0 +1,32 @@
+{
+  "parent": "torqmod:recipes/root",
+  "rewards": {
+    "recipes": [
+      "torqmod:glowstone_prismarine"
+    ]
+  },
+  "criteria": {
+    "has_glowstone_prismarine_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "torqmod:glowstone_prismarine_dust"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "torqmod:glowstone_prismarine"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glowstone_prismarine_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

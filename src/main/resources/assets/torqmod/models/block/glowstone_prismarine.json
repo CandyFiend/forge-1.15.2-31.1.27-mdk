@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "torqmod:block/glowstone_prismarine"
+    }
+}

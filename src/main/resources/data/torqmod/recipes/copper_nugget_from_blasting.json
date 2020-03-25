@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": [
+    {
+      "item": "torqmod:copper_pickaxe"
+    },
+    {
+      "item": "torqmod:copper_shovel"
+    },
+    {
+      "item": "torqmod:copper_axe"
+    },
+    {
+      "item": "torqmod:copper_hoe"
+    },
+    {
+      "item": "torqmod:copper_sword"
+    },
+    {
+      "item": "torqmod:copper_helmet"
+    },
+    {
+      "item": "torqmod:copper_chestplate"
+    },
+    {
+      "item": "torqmod:copper_leggings"
+    },
+    {
+      "item": "torqmod:copper_boots"
+    }
+  ],
+  "result": "torqmod:copper_nugget",
+  "experience": 0.1,
+  "cookingtime": 100
+}

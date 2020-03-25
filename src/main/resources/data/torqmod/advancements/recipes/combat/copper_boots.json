@@ -1,0 +1,32 @@
+{
+  "parent": "torqmod:recipes/root",
+  "rewards": {
+    "recipes": [
+      "torqmod:copper_boots"
+    ]
+  },
+  "criteria": {
+    "has_copper_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "torqmod:copper_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "torqmod:copper_boots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_copper_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

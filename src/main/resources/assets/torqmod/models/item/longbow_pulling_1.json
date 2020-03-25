@@ -1,0 +1,6 @@
+{
+    "parent": "torqmod:item/longbow",
+    "textures": {
+        "layer0": "torqmod:item/longbow_pulling_1"
+    }
+}

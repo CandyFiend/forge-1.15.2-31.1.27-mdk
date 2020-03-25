@@ -1,0 +1,40 @@
+﻿{
+	"_comment": "item",
+    "item.torqmod.glowstone_emerald_dust": "Изумрудная светокаменная пыль",
+    "item.torqmod.glowstone_diamond_dust": "Алмазная светокаменная пыль",
+    "item.torqmod.glowstone_prismarine_dust": "Призмариновая светокаменная пыль",
+    "item.torqmod.copper_ingot": "Медный слиток",
+	"item.torqmod.copper_nugget": "Медный самородок",
+    "item.torqmod.apple_pie": "Яблочный пирог",
+    
+    "item.torqmod.copper_sword": "Медный меч",
+    "item.torqmod.copper_pickaxe": "Медная кирка",
+    "item.torqmod.copper_shovel": "Медная лопата",
+    "item.torqmod.copper_axe": "Медный топор",
+    "item.torqmod.copper_hoe": "Медная мотыга",
+    
+    "item.torqmod.copper_helmet": "Медный шлем",
+    "item.torqmod.copper_chestplate": "Медный нагрудник",
+    "item.torqmod.copper_leggings": "Медные поножи",
+    "item.torqmod.copper_boots": "Медные ботинки",
+    
+    "_comment": "block",
+    "block.torqmod.glowstone_emerald": "Изумрудный светокамень",
+    "block.torqmod.glowstone_diamond": "Алмазный светокамень",
+    "block.torqmod.glowstone_prismarine": "Призмариновый светокамень",
+	"block.torqmod.copper_ore": "Медная руда",
+	"block.torqmod.copper_block": "Медный блок",
+	
+	"_comment": "itemGroup",
+	"itemGroup.torqmodBuildingBlocks": "Torqmod строительные блоки",
+	"itemGroup.torqmodMisc": "Torqmod разное",
+	"itemGroup.torqmodFood": "Torqmod еда",
+	"itemGroup.torqmodTools": "Torqmod инструменты",
+	"itemGroup.torqmodCombat": "Torqmod оружие и броня",
+	
+	"_comment": "advancements",
+	"advancements.story.smelt_copper.title": "Выплавка меди",
+	"advancements.story.smelt_copper.description": "Выплавьте медный слиток",
+	"advancements.story.copper_tools.title": "Металлические инструменты",
+	"advancements.story.copper_tools.description": "Сделайте простую медную кирку"
+}

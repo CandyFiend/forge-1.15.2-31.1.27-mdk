@@ -1,0 +1,40 @@
+{
+    "_comment": "item",
+    "item.torqmod.glowstone_emerald_dust": "Glowstone Emerald Dust",
+    "item.torqmod.glowstone_diamond_dust": "Glowstone Diamond Dust",
+    "item.torqmod.glowstone_diamond_dust": "Glowstone Prismarine Dust",
+    "item.torqmod.copper_ingot": "Copper Ignot",
+    "item.torqmod.copper_nugget": "Copper Nugget",
+    "item.torqmod.apple_pie": "Apple Pie",
+
+    "item.torqmod.copper_sword": "Copper Sword",
+    "item.torqmod.copper_pickaxe": "Copper Pickaxe",
+    "item.torqmod.copper_shovel": "Copper Shovel",
+    "item.torqmod.copper_axe": "Copper Axe",
+    "item.torqmod.copper_hoe": "Copper Hoe",
+
+    "item.torqmod.copper_helmet": "Copper Helmet",
+    "item.torqmod.copper_chestplate": "Copper Chestplate",
+    "item.torqmod.copper_leggings": "Copper Leggings",
+    "item.torqmod.copper_boots": "Copper Boots",
+
+    "_comment": "block",
+    "block.torqmod.glowstone_emerald": "Glowstone Emerald Block",
+    "block.torqmod.glowstone_diamond": "Glowstone Diamond Block",
+    "block.torqmod.glowstone_prismarine": "Glowstone Prismarine Block",
+    "block.torqmod.copper_ore": "Copper Ore",
+    "block.torqmod.copper_block": "Block of Copper",
+
+    "_comment": "itemGroup",
+    "itemGroup.torqmodBuildingBlocks": "Torqmod Building Blocks",
+    "itemGroup.torqmodMisc": "Torqmod Miscellaneous",
+    "itemGroup.torqmodFood": "Torqmod Food",
+    "itemGroup.torqmodTools": "Torqmod Tools",
+    "itemGroup.torqmodCombat": "Torqmod Combat",
+
+    "_comment": "advancements",
+    "advancements.story.smelt_copper.title": "Copper smelting",
+    "advancements.story.smelt_copper.description": "Smelt a copper ingot",
+    "advancements.story.copper_tools.title": "Metal tools!",
+    "advancements.story.copper_tools.description": "Construct a simple copper pickaxe"
+}

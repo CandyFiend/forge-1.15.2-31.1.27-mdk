@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "torqmod:item/copper_shovel"
+    }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "torqmod:recipes/root",
+  "rewards": {
+    "recipes": [
+      "torqmod:glowstone_emerald"
+    ]
+  },
+  "criteria": {
+    "has_glowstone_emerald_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "torqmod:glowstone_emerald_dust"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "torqmod:glowstone_emerald"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glowstone_emerald_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "torqmod:recipes/root",
+  "rewards": {
+    "recipes": [
+      "torqmod:apple_pie"
+    ]
+  },
+  "criteria": {
+    "has_apple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:apple"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "torqmod:apple_pie"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_apple",
+      "has_the_recipe"
+    ]
+  ]
+}

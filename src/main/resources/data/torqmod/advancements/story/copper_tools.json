@@ -1,0 +1,36 @@
+{
+  "parent": "torqmod:story/smelt_copper",
+  "display": {
+    "icon": {
+      "item": "torqmod:copper_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.story.copper_tools.title"
+    },
+    "description": {
+      "translate": "advancements.story.copper_tools.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "copper_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "torqmod:copper_pickaxe"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "copper_pickaxe"
+    ]
+  ]
+}

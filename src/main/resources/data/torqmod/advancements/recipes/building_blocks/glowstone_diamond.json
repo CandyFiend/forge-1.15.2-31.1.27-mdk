@@ -1,0 +1,32 @@
+{
+  "parent": "torqmod:recipes/root",
+  "rewards": {
+    "recipes": [
+      "torqmod:glowstone_diamond"
+    ]
+  },
+  "criteria": {
+    "has_glowstone_diamond_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "torqmod:glowstone_diamond_dust"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "torqmod:glowstone_diamond"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glowstone_diamond_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": [
+            { "model": "torqmod:block/glowstone_prismarine" }
+        ]
+    }
+}

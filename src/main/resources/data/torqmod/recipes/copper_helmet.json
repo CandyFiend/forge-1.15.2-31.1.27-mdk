@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "torqmod:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "torqmod:copper_helmet"
+  }
+}
