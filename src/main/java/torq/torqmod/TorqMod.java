@@ -12,7 +12,9 @@ import torq.torqmod.world.ModOreGeneration;
  * @author torq
  * @version 0.1
  */
+
 @Mod(Reference.MOD_ID)
+@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TorqMod {
 	public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
