@@ -9,15 +9,15 @@ import torq.torqmod.Reference;
 import torq.torqmod.TorqMod;
 import torq.torqmod.item.IFOVUpdateItem;
 
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ClientEventHandler {
-    public static ClientEventHandler INSTANCE = new ClientEventHandler();
+
+    public static final ClientEventHandler INSTANCE = new ClientEventHandler();
 
     @SubscribeEvent
-    public void handleFOVUpdateEvent(FOVUpdateEvent event) {
+    public static void handleFOVUpdateEvent(FOVUpdateEvent event) {
         ItemStack stack = event.getEntity().getActiveItemStack();
         PlayerEntity playerEntity = event.getEntity();
-
         if (stack.getItem() instanceof IFOVUpdateItem) {
             IFOVUpdateItem fovUpdateItem = (IFOVUpdateItem) stack.getItem();
             event.setNewfov(event.getFov() - fovUpdateItem.getFOVMod(stack, playerEntity));

@@ -96,7 +96,8 @@ public class ModItem {
                         "copper_axe"),
                 new HoeItem(ModItemTier.COPPER, -1.0F, (new Item.Properties()).group(ModItemGroup.TORQMOD_TOOLS))
                         .setRegistryName(Reference.MOD_ID, "copper_hoe"),
-                new ModBowItem((new ModBowItem.Properties()).pullingTime(50.0F).maxArrowVelocity(1.5F).arrowDamage(2.5D),
+                new ModBowItem((new ModBowItem.Properties()).pullingTime(50.0F)
+                        .arrowSettings(new ArrowSettings((new ArrowSettings.Properties()).maxArrowVelocity(2.0F))),
                         (new Item.Properties()).maxDamage(384).group(ModItemGroup.TORQMOD_COMBAT))
                         .setRegistryName(Reference.MOD_ID, "longbow")
         };

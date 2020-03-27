@@ -1,6 +1,7 @@
 package torq.torqmod.item;
 
 import java.util.function.Predicate;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -13,36 +14,32 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import torq.torqmod.TorqMod;
 
 /**
- *
- *
  * @author torq
  * @version 0.1
  */
 public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
 
     private final float pullingTime;
-    private final float maxArrowVelocity;
-    private final double arrowDamage;
-    private final float zoomMultiplier;
+    private final ArrowSettings arrowSettings;
+    private final FOVUpdateItem fovUpdateItem;
 
     public ModBowItem(ModBowItem.Properties properties, Item.Properties builder) {
         super(builder);
 
         this.pullingTime = properties.pullingTime;
-        this.maxArrowVelocity = properties.maxArrowVelocity;
-        this.arrowDamage = properties.arrowDamage;
-        this.zoomMultiplier = properties.zoomMultiplier;
+        this.arrowSettings = properties.arrowSettings;
+        this.fovUpdateItem = new FOVUpdateItem((new FOVUpdateItem.Properties()).zoomTime(getPullingTime()));
 
         this.addPropertyOverride(new ResourceLocation("pull"), (itemStackIn, worldIn, livingEntityIn) -> {
             if (livingEntityIn == null) {
                 return 0.0F;
             } else {
                 /**
+                 * Returns the bow charge.
+                 *
                  * itemStackIn.getUseDuration() - livingEntityIn.getItemInUseCount() how much time has passed
                  * this.getPullingTime() how much time should pass
                  * (itemStackIn.getUseDuration() - livingEntityIn.getItemInUseCount()) / this.getPullingTime() = 1+ when the right amount of time has passed
@@ -73,16 +70,16 @@ public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
                     itemstack = new ItemStack(Items.ARROW);
                 }
 
-                float f = getArrowVelocity(i);
-                if (!((double) f < 0.1D)) {
+                float arrowVelocity = getArrowVelocity(i);
+                if (!((double) arrowVelocity < 0.1D)) {
                     boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
                     if (!worldIn.isRemote) {
                         ArrowItem arrowitem = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
                         AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
                         abstractarrowentity = customeArrow(abstractarrowentity);
-                        abstractarrowentity.setDamage(getArrowDamage());
-                        abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
-                        if (f == 1.0F) {
+                        abstractarrowentity.setDamage(arrowSettings.getArrowDamage());
+                        abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F, arrowVelocity * 3.0F, arrowSettings.getArrowInaccuracy());
+                        if (arrowVelocity == 1.0F) {
                             abstractarrowentity.setIsCritical(true);
                         }
 
@@ -103,14 +100,15 @@ public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
                         stack.damageItem(1, playerentity, (p_220009_1_) -> {
                             p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
                         });
-                        if (flag1 || playerentity.abilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW)) {
+                        if (flag1 || playerentity.abilities.isCreativeMode &&
+                                (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW)) {
                             abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
                         }
 
                         worldIn.addEntity(abstractarrowentity);
                     }
 
-                    worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(), playerentity.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
                     if (!flag1 && !playerentity.abilities.isCreativeMode) {
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
@@ -126,7 +124,7 @@ public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
 
     /**
      * Gets the velocity of the arrow entity from the bow's charge
-     *
+     * <p>
      * This method adjusts to the indicated arrow velocity and pulling time.
      * f=charge/pulling_time
      * if charge=pulling_time, f=1 (the bow have full charge -> the arrow need's to have max velocity)
@@ -135,10 +133,10 @@ public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
      */
     public float getArrowVelocity(int charge) {
         float f = (float) charge / this.getPullingTime();
-        float k = getMaxArrowVelocity() * 3 - 1;
+        float k = arrowSettings.getMaxArrowVelocity() * 3 - 1;
         f = (f * f + f * k) / 3.0F;
-        if (f > getMaxArrowVelocity()) {
-            f = getMaxArrowVelocity();
+        if (f > arrowSettings.getMaxArrowVelocity()) {
+            f = arrowSettings.getMaxArrowVelocity();
         }
 
         return f;
@@ -147,12 +145,16 @@ public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
     /**
      * How long it takes to use or consume an item
      */
-    public int getUseDuration(ItemStack stack) { return 72000; }
+    public int getUseDuration(ItemStack stack) {
+        return 72000;
+    }
 
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public UseAction getUseAction(ItemStack stack) { return UseAction.BOW; }
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
+    }
 
     /**
      * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
@@ -186,55 +188,27 @@ public class ModBowItem extends ShootableItem implements IFOVUpdateItem {
 
     @Override
     public float getFOVMod(ItemStack stack, PlayerEntity player) {
-        float progress = MathHelper.clamp((stack.getUseDuration() - player.getItemInUseCount()) / pullingTime, 0, getMaxArrowVelocity());
-        return progress * progress * zoomMultiplier;
+        return fovUpdateItem.getFOVMod(stack, player);
     }
 
     public float getPullingTime() {
         return this.pullingTime;
     }
 
-    public float getMaxArrowVelocity() {
-        return this.maxArrowVelocity;
-    }
-
-    public double getArrowDamage() {
-        return this.arrowDamage;
-    }
-
-    public static class Properties{
+    public static class Properties {
         /**
          * Default bow has 20.0F.
          */
         private float pullingTime = 20.0F;
-        /**
-         * Default bow has 1.0F.
-         */
-        private float maxArrowVelocity = 1.0F;
-        /**
-         * Default arrow has 2.0D.
-         */
-        private double arrowDamage = 2.0D;
-
-        private float zoomMultiplier = 0.15F;
+        private ArrowSettings arrowSettings = new ArrowSettings(new ArrowSettings.Properties());
 
         public ModBowItem.Properties pullingTime(float pullingTimeIn) {
             this.pullingTime = pullingTimeIn;
             return this;
         }
 
-        public  ModBowItem.Properties maxArrowVelocity(float maxArrowVelocityIn) {
-            this.maxArrowVelocity = maxArrowVelocityIn;
-            return this;
-        }
-
-        public ModBowItem.Properties arrowDamage(double arrowDamageIn) {
-            this.arrowDamage = arrowDamageIn;
-            return this;
-        }
-
-        public ModBowItem.Properties zoomMultiplier(float zoomMultiplierIn) {
-            this.zoomMultiplier = zoomMultiplierIn;
+        public ModBowItem.Properties arrowSettings(ArrowSettings arrowSettingsIn) {
+            this.arrowSettings = arrowSettingsIn;
             return this;
         }
     }

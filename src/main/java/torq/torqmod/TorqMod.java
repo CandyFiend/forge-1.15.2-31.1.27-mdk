@@ -25,7 +25,7 @@ public class TorqMod {
 	}
 
 	@SubscribeEvent
-	public  static void onLoadComplete(FMLLoadCompleteEvent event) {
+	public static void onLoadComplete(FMLLoadCompleteEvent event) {
 		ModOreGeneration.setupOreGeneration();
 	}
 }
